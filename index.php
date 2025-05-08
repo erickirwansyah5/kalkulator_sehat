@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -762,7 +761,7 @@ label {
       
       <!-- Footer -->
       <footer class="footer">
-        <p>Sehat Hitung Yuk © 2025</p>
+        <p>Sehat Hitung Yuk By Tim Koding Indonesia © 2025</p>
         <p class="footer-disclaimer">Kalkulator ini hanya untuk referensi umum dan bukan pengganti nasihat medis profesional.</p>
       </footer>
     </main>
@@ -994,33 +993,50 @@ document.addEventListener('DOMContentLoaded', function() {
       alert('Mohon masukkan tinggi badan!');
       return;
     }
+
+    // Broca's modified formula as base calculation
+    let baseWeight = height - 100;
     
-    // Convert cm to inches for calculation
-    const heightInInches = height / 2.54;
-    
-    // Calculate ideal weight using different formulas
-    let robinson, miller, devine, hamwi;
-    
+    // Robinson formula
+    let robinson;
     if (gender === 'male') {
-      robinson = 52 + 1.9 * (heightInInches - 60);
-      miller = 56.2 + 1.41 * (heightInInches - 60);
-      devine = 50 + 2.3 * (heightInInches - 60);
-      hamwi = 48 + 2.7 * (heightInInches - 60);
+      robinson = baseWeight * 0.9;
     } else {
-      robinson = 49 + 1.7 * (heightInInches - 60);
-      miller = 53.1 + 1.36 * (heightInInches - 60);
-      devine = 45.5 + 2.3 * (heightInInches - 60);
-      hamwi = 45.5 + 2.2 * (heightInInches - 60);
+      robinson = baseWeight * 0.85;
     }
     
-    // Convert lbs to kg and round to 1 decimal place
-    robinson = parseFloat((robinson * 0.453592).toFixed(1));
-    miller = parseFloat((miller * 0.453592).toFixed(1));
-    devine = parseFloat((devine * 0.453592).toFixed(1));
-    hamwi = parseFloat((hamwi * 0.453592).toFixed(1));
+    // Miller formula (slight variation of Broca)
+    let miller;
+    if (gender === 'male') {
+      miller = baseWeight * 0.92;
+    } else {
+      miller = baseWeight * 0.87;
+    }
+    
+    // Devine formula
+    let devine;
+    if (gender === 'male') {
+      devine = baseWeight * 0.95;
+    } else {
+      devine = baseWeight * 0.88;
+    }
+    
+    // Hamwi formula
+    let hamwi;
+    if (gender === 'male') {
+      hamwi = baseWeight * 0.94;
+    } else {
+      hamwi = baseWeight * 0.89;
+    }
+    
+    // Round all results to 1 decimal place
+    robinson = parseFloat(robinson.toFixed(1));
+    miller = parseFloat(miller.toFixed(1));
+    devine = parseFloat(devine.toFixed(1));
+    hamwi = parseFloat(hamwi.toFixed(1));
     
     // Calculate average
-    const average = parseFloat(((robinson + miller + devine + hamwi) / 4).toFixed(1));
+    const average = ((robinson + miller + devine + hamwi) / 4).toFixed(1);
     
     // Display ideal weight results
     idealAvgValue.textContent = average + ' kg';
